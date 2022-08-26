@@ -4,7 +4,11 @@
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
+		"serve:test": "vue-cli-service serve --mode testing",
+		"serve:stage": "vue-cli-service serve --mode staging",
 		"build": "vue-cli-service build",
+		"build:test": "vue-cli-service build --mode testing",
+		"build:stage": "vue-cli-service build --mode staging",
 		"lint": "vue-cli-service lint",
 		"prettier": "prettier --write .",
 		"prepare": "husky install",
@@ -12,6 +16,7 @@
 	},
 	"dependencies": {
 		"core-js": "^3.8.3",
+		"element-ui": "^2.15.9",
 		"vue": "^2.6.14",
 		"vue-router": "^3.5.1",
 		"vuex": "^3.6.2"
