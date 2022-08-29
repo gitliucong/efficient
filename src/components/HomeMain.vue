@@ -1,19 +1,3 @@
-<!-- <template>
-	<div class="home">
-		<my-main></my-main>
-	</div>
-</template>
-
-<script>
-import MyMain from '@/components/MyMain.vue'
-
-export default {
-	name: 'HomeView',
-	components: {
-		MyMain
-	}
-}
-</script> -->
 <template>
 	<div>
 		<!-- 待办事项 -->
@@ -119,7 +103,7 @@ export default {
 		myCharts.setOption({
 			xAxis: {
 				type: 'category',
-				data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+				data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月']
 			},
 			tooltip: {
 				trigger: 'axis',
@@ -134,7 +118,7 @@ export default {
 			],
 			series: [
 				{
-					data: [120, 200, 150, 80, 70, 110, 200, 158, 237, 222, 167, 150],
+					data: [120, 200, 150, 80, 70, 110, 200,158,237,222,167,150],
 					type: 'bar',
 					// showBackground: true,
 					itemStyle: {
@@ -267,14 +251,14 @@ export default {
 	border: 1px solid #bbb;
 	.home-bottom-top {
 		text-align: left;
-		margin-left: 130px;
-		margin-top: 30px;
-		font-size: 20px;
+        margin-left: 130px;
+        margin-top: 30px;
+        font-size: 20px;
 	}
 	#birthday {
 		width: 1200px;
 		height: 260px;
-		margin: 0 auto;
+        margin: 0 auto;
 	}
 }
 </style>

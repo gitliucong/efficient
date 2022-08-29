@@ -4,18 +4,28 @@ import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-	{
+const routes = [{
 		path: '/',
-		name: 'home',
-		component: HomeView,
-		reactive: '/login'
+		name: 'main',
+		component: () => import("../components/MyMain.vue"),
+		reactive: '/login',
+		children: [{
+				path: '/home',
+				name: 'home',
+				component: HomeView
+			},
+			{
+				path: '/about',
+				name: 'about',
+				component: () => import('../views/AboutView.vue')
+			}, {
+				path: '/user',
+				name: 'user',
+				component: () => import('../views/UserView.vue')
+			},
+		]
 	},
-	{
-		path: '/about',
-		name: 'about',
-		component: () => import('../views/AboutView.vue')
-	},
+
 	{
 		path: '/login',
 		name: 'login',

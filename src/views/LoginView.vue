@@ -27,29 +27,19 @@
 				</el-form-item>
 			</el-form>
 		</el-card>
+		<div class="login-text"><p>©2022美团版权所有京ICP证070791号京公网安备11010502025545号</p></div>
 		<!-- 忘记密码对话框 -->
-		<el-dialog title="修改密码" :visible.sync="dialogFormVisible">
-			<el-form :model="form" :rules="rules" ref="form">
-				<el-form-item label="用户名" :label-width="formLabelWidth" prop="name">
-					<el-input v-model="form.name" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="新密码" :label-width="formLabelWidth" prop="password">
-					<el-input v-model="form.password" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="再次输入" :label-width="formLabelWidth" prop="passwords">
-					<el-input v-model="form.passwords" autocomplete="off"></el-input>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="dialogFormVisible = false">取 消</el-button>
-				<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-			</div>
-		</el-dialog>
+		<pass-dialog :dialogFormVisible="dialogFormVisible" @close="dialogFormVisible = false"></pass-dialog>
 	</div>
 </template>
 
 <script>
+import PassDialog from '@/components/PassDialog.vue'
+// import axios from 'axios'
+import { login } from '../../api/api'
 export default {
+	components: { PassDialog },
+	name: 'LoginView',
 	data() {
 		return {
 			// 登录表单数据
@@ -88,6 +78,14 @@ export default {
 				}
 			})
 		}
+	},
+	created() {
+		login({ uesr: 123 }).then((res) => {
+			console.log(res, 'res')
+		})
+		// axios.post('/effect/home/loginsearch').then((res) => {
+		// 	console.log(res, 'res登录日志')
+		// })
 	}
 }
 </script>
@@ -156,6 +154,14 @@ export default {
 		line-height: 37px;
 		text-decoration: none;
 		margin-bottom: 20px;
+	}
+}
+.login-text {
+	position: fixed;
+	top: 90%;
+	p {
+		color: #c0c4cc;
+		font-size: 14px;
 	}
 }
 // input框圆角样式
