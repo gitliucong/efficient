@@ -101,7 +101,7 @@ export default {
 <script>
 import * as echarts from 'echarts'
 export default {
-	name: '',
+	name: 'HomeView',
 	components: {},
 	data() {
 		return {

@@ -9,7 +9,6 @@
 					<MyHeader></MyHeader>
 				</el-header>
 				<el-main>
-
 					<router-view></router-view>
 				</el-main>
 			</div>
@@ -22,7 +21,7 @@
 import MyHeader from './MyHeader'
 import MyAside from './MyAside'
 export default {
-	name: '',
+	name: 'MyMain',
 	components: {
 		// HomeMain,
 		MyHeader,
@@ -54,7 +53,7 @@ export default {
 	flex: 1;
 }
 .el-aside {
-	// overflow: hidden;
+	overflow: visible;
 	background-color: #7aabf6;
 	color: #333;
 	text-align: center;

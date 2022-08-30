@@ -34,7 +34,7 @@
 
 <script>
 export default {
-	name: '',
+	name: 'MyHeader',
 	components: {},
 	data() {
 		return {}

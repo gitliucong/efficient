@@ -6,54 +6,66 @@
 			<i class="el-icon-s-fold fold"></i>
 		</div>
 		<el-menu
-			default-active="2"
+			:default-active="$route.path"
 			class="el-menu-vertical-demo"
 			@open="handleOpen"
 			@close="handleClose"
 			background-color="#7aabf6"
 			text-color="#fff"
-			active-text-color="#ffd04b"
 			align="left"
 			router
 			:collapse="isCollapse"
+			unique-opened
 		>
-			<el-menu-item index="/home">
-				<i class="el-icon-s-home"></i>
-				<span slot="title">首页</span>
-			</el-menu-item>
-			<el-submenu index="1">
-				<template slot="title">
-					<i class="el-icon-setting"></i>
-					<span>基础配置</span>
-				</template>
-				<el-menu-item-group>
-					<el-menu-item index="/user">用户管理</el-menu-item>
-					<el-menu-item index="1-2">角色管理</el-menu-item>
-				</el-menu-item-group>
-			</el-submenu>
+			<template v-for="item in menuData">
+				<el-submenu v-if="item.isDir" :index="item.path" :key="item.id">
+					<template v-slot:title>
+						<i :class="item.icon"></i>
+						<span>{{ item.name }}</span>
+					</template>
+
+					<el-menu-item v-for="child in item.children" :index="child.path" :key="child.id">{{
+						child.name
+					}}</el-menu-item>
+				</el-submenu>
+
+				<el-menu-item v-else :index="item.path" :key="item.id">
+					<i :class="item.icon"></i>
+					<span slot="title">{{ item.name }}</span>
+				</el-menu-item>
+			</template>
 		</el-menu>
 	</div>
 </template>
 
 <script>
+// import { getMenu } from '../untils/api'
+
+import { getMenu } from '../../api/api'
 export default {
-	name: '',
+	name: 'MyAside',
 	components: {},
 	data() {
 		return {
-			isCollapse: false
+			isCollapse: false,
+			menuData: []
 		}
 	},
 	methods: {
-		handleOpen(key, keyPath) {
+		handleOpen() {
 			// console.log(key, keyPath)
 		},
-		handleClose(key, keyPath) {
+		handleClose() {
 			// console.log(key, keyPath)
 		}
 	},
 	computed: {},
-	created() {},
+	created() {
+		getMenu().then((res) => {
+			console.log(res.data.menuData)
+			this.menuData = res.data.menuData
+		})
+	},
 	mounted() {}
 }
 </script>
@@ -74,8 +86,8 @@ export default {
 	}
 	i {
 		position: absolute;
-		top: -285px;
-		right: -150px;
+		top: 20px;
+		right: -40px;
 		z-index: 90;
 		font-size: 28px;
 		color: #bbb;

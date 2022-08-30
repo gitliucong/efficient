@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-dialog title="修改密码" :visible.sync="visible" width="400px" @closed="$emit('close')">
+		<el-dialog title="修改密码" visible.sync="visible" width="400px" @closed="$emit('close')">
 			<el-form :model="form" :rules="rules" ref="form">
 				<el-form-item label="用户名" :label-width="formLabelWidth" prop="name">
 					<el-input v-model="form.name" autocomplete="off"></el-input>
@@ -23,7 +23,7 @@
 <script>
 export default {
 	props: ['dialogFormVisible'],
-	name: '',
+	name: 'PassDialog',
 	components: {},
 	data() {
 		return {
