@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { getFlowpathtype } from '../../api/api'
+import { getFlowpathtype } from '../../../../api/api'
 export default {
 	name: 'ApprovalTypes',
 	components: {},

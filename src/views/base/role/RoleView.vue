@@ -4,9 +4,7 @@
 			<div>角色名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
-			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="dialogVisible = true"
-				>新增用户</el-button
-			>
+			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增用户</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
@@ -35,54 +33,52 @@
 		>
 		</el-pagination>
 		<!-- 新增角色对话框 -->
-		<el-dialog title="提示" :visible.sync="dialogVisible" width="30%" label-position="right">
-			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-				<el-form-item label="角色名称" prop="name">
-					<el-input v-model="ruleForm.name"></el-input>
-				</el-form-item>
-				<!-- <el-cascader :options="options" :props="{ multiple: true, checkStrictly: true }" clearable></el-cascader> -->
-				<el-form-item label="备注" prop="desc">
-					<el-input type="textarea" v-model="ruleForm.desc"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
-					<el-button @click="resetForm('ruleForm')">取消</el-button>
-				</el-form-item>
-			</el-form>
-		</el-dialog>
+		<RoleDialog v-if="dialogVisible" ref="Visible" @close="close"></RoleDialog>
 	</div>
 </template>
 
 <script>
+import RoleDialog from './RoleDialog'
 // import { getRoles } from '../untils/api'
-import { getRoles } from '../../api/api'
+import { getRoles } from '../../../../api/api'
 export default {
 	name: 'RoleView',
-	components: {},
+	components: {
+		RoleDialog
+	},
 	data() {
 		return {
 			name: '',
 			tableData: [],
 			currentPage: 1,
 			pagesize: 1,
-			ruleForm: {},
-			rules: {},
-			dialogVisible: false
+			dialogVisible: false,
+			flag: 1
 		}
 	},
 	methods: {
-		submitForm(formName) {
-			this.$refs[formName].validate((valid) => {
-				if (valid) {
-					alert('submit!')
-				} else {
-					console.log('error submit!!')
-					return false
-				}
+		/* 修改 */
+		handleEdit(index, row) {
+			// console.log(index, row)
+			this.flag = 2
+			this.dialogVisible = true
+			this.$nextTick(() => {
+				this.$refs.Visible.init(row)
 			})
 		},
-		resetForm(formName) {
-			this.$refs[formName].resetFields()
+		/* 新增 */
+		NewPosts() {
+			this.flag = 1
+			this.dialogVisible = true
+			this.$nextTick(() => {
+				this.$refs.Visible.NewPosts()
+			})
+		},
+		close() {
+			this.dialogFormVisible = false
+		},
+		handleDelete(index, row) {
+			console.log(index, row)
 		},
 		handleSizeChange(val) {
 			// console.log(`每页 ${val} 条`)

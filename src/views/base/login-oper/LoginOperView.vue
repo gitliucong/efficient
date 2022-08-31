@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { getLoginslogs } from '../../api/api'
+import { getLoginslogs } from '../../../../api/api'
 
 export default {
 	name: 'LoginOperView',

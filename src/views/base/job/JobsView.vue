@@ -4,9 +4,7 @@
 			<div>岗位名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
-			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="dialogVisible = true"
-				>新增岗位</el-button
-			>
+			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增岗位</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
@@ -35,58 +33,52 @@
 		>
 		</el-pagination>
 		<!-- 新增岗位对话框 -->
-		<el-dialog title="新增岗位" :visible.sync="dialogVisible" width="30%" label-position="right">
-			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-				<el-form-item label="岗位名称" prop="j_name">
-					<el-input v-model="ruleForm.j_name"></el-input>
-				</el-form-item>
-
-				<el-form-item label="备注" prop="j_comment">
-					<el-input type="textarea" v-model="ruleForm.j_comment"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
-					<el-button @click="resetForm('ruleForm')">取消</el-button>
-				</el-form-item>
-			</el-form>
-		</el-dialog>
+		<JobsDialog v-if="dialogFormVisible" ref="dialogForm" @close="close"></JobsDialog>
 	</div>
 </template>
 
 <script>
-import { getJobs } from '../../api/api'
+import JobsDialog from './JobsDialog'
+import { getJobs } from '../../../../api/api'
 
 export default {
 	name: 'JobsView',
-	components: {},
+	components: {
+		JobsDialog
+	},
 	data() {
 		return {
 			name: '',
 			tableData: [],
 			currentPage: 1,
 			pagesize: 1,
-			ruleForm: {},
-			rules: {},
-			dialogVisible: false
+			dialogFormVisible: false
 		}
 	},
 	methods: {
-		submitForm(formName) {
-			this.$refs[formName].validate((valid) => {
-				if (valid) {
-					alert('submit!')
-				} else {
-					console.log('error submit!!')
-					return false
-				}
+		/* 修改 */
+		handleEdit(index, row) {
+			// console.log(index, row)
+			// this.dialogForm.init
+			this.dialogFormVisible = true
+			this.$nextTick(() => {
+				this.$refs.dialogForm.init(row)
 			})
 		},
-		resetForm(formName) {
-			this.$refs[formName].resetFields()
+		NewPosts() {
+			this.dialogFormVisible = true
+			this.$nextTick(() => {
+				console.log(this.$refs.dialogForm)
+				this.$refs.dialogForm.NewPosts()
+			})
 		},
-		// handleNodeClick(data) {
-		// 	console.log(data)
-		// },
+		/* 关闭弹窗 */
+		close() {
+			this.dialogFormVisible = false
+		},
+		handleDelete(index, row) {
+			console.log(index, row)
+		},
 		handleSizeChange(val) {
 			// console.log(`每页 ${val} 条`)
 			this.pagesize = val

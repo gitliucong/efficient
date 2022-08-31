@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-dialog title="修改密码" visible.sync="visible" width="400px" @closed="$emit('close')">
+		<el-dialog title="修改密码" :visible.sync="visible" width="400px" @closed="$emit('close')">
 			<el-form :model="form" :rules="rules" ref="form">
 				<el-form-item label="用户名" :label-width="formLabelWidth" prop="name">
 					<el-input v-model="form.name" autocomplete="off"></el-input>
@@ -29,7 +29,7 @@ export default {
 		return {
 			// dialogFormVisible: false,
 			formLabelWidth: '100px',
-			// 表单验证
+			/* 表单验证 */
 			rules: {
 				name: [
 					{ required: true, message: '用户名不能为空', trigger: 'blur' },
@@ -44,7 +44,7 @@ export default {
 					{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
 				]
 			},
-			// 忘记密码表单数据
+			/* 忘记密码表单数据 */
 			form: {
 				name: '',
 				password: '',
@@ -56,7 +56,7 @@ export default {
 	watch: {
 		dialogFormVisible: function (newVal) {
 			this.visible = newVal
-			console.log(newVal)
+			console.log(this.visible)
 		}
 	},
 	methods: {},

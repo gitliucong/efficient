@@ -1,19 +1,3 @@
-<!-- <template>
-	<div class="home">
-		<my-main></my-main>
-	</div>
-</template>
-
-<script>
-import MyMain from '@/components/MyMain.vue'
-
-export default {
-	name: 'HomeView',
-	components: {
-		MyMain
-	}
-}
-</script> -->
 <template>
 	<div>
 		<!-- 待办事项 -->
@@ -44,8 +28,7 @@ export default {
 				</li>
 			</ul>
 			<div class="block">
-				<!-- <span class="demonstration"></span> -->
-				<el-date-picker v-model="value1" type="week" format="yyyy 第 WW 周" placeholder="选择周"> </el-date-picker>
+				<el-calendar v-model="value"> </el-calendar>
 			</div>
 		</div>
 		<!-- 员工数据  地区分布 -->
@@ -105,17 +88,18 @@ export default {
 	components: {},
 	data() {
 		return {
-			value1: ''
+			/* 日历 */
+			value: new Date()
 		}
 	},
 	methods: {},
 	computed: {},
 	created() {},
 	mounted() {
-		// 基于准备好的dom，初始化echarts实例
+		/* 基于准备好的dom，初始化echarts实例 */
 		var myChart = echarts.init(document.getElementById('region'))
 		var myCharts = echarts.init(document.getElementById('birthday'))
-		// 绘制图表
+		/* 绘制图表 */
 		myCharts.setOption({
 			xAxis: {
 				type: 'category',
@@ -206,15 +190,16 @@ export default {
 	}
 	.block {
 		width: 28%;
+		height: 255px;
 		text-align: left;
 	}
 }
-// 员工数据  员工地区分布
+/* 员工数据  员工地区分布 */
 .home-content {
 	margin: 20px 0;
 	display: flex;
 	justify-content: space-between;
-	// 员工数据
+	/* 员工数据 */
 	.content-left {
 		width: 49%;
 		height: 250px;
@@ -243,7 +228,7 @@ export default {
 			}
 		}
 	}
-	// 员工地区分布
+	/* 员工地区分布 */
 	.content-right {
 		width: 49%;
 		border: 1px solid #bbb;
@@ -260,7 +245,7 @@ export default {
 		}
 	}
 }
-// 员工生日
+/* 员工生日 */
 .home-bottom {
 	height: 270px;
 	width: 100%;
@@ -275,6 +260,22 @@ export default {
 		width: 1200px;
 		height: 260px;
 		margin: 0 auto;
+	}
+}
+::v-deep .el-calendar {
+	width: 100%;
+	height: 255px;
+	.el-calendar__body {
+		// padding: 15px 15px 15px;
+		.el-calendar-day {
+			height: 12px;
+		}
+		.el-calendar-table .el-calendar-day {
+			box-sizing: border-box;
+			padding: 5px;
+			height: 22px;
+			text-align: center;
+		}
 	}
 }
 </style>

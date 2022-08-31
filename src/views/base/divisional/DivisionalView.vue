@@ -4,9 +4,7 @@
 			<div>部门名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
-			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="dialogVisible = true"
-				>新增部门</el-button
-			>
+			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增部门</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
@@ -35,30 +33,19 @@
 		>
 		</el-pagination>
 		<!-- 新增部门对话框 -->
-		<el-dialog title="新增部门" :visible.sync="dialogVisible" width="30%" label-position="right">
-			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-				<el-form-item label="部门名称" prop="d_name">
-					<el-input v-model="ruleForm.d_name"></el-input>
-				</el-form-item>
-
-				<el-form-item label="备注" prop="d_comment">
-					<el-input type="textarea" v-model="ruleForm.d_comment"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
-					<el-button @click="resetForm('ruleForm')">取消</el-button>
-				</el-form-item>
-			</el-form>
-		</el-dialog>
+		<DivisDialog v-if="dialogVisible" ref="Visible" @close="close"></DivisDialog>
 	</div>
 </template>
 
 <script>
-import { getDepartment } from '../../api/api'
+import DivisDialog from './DivisDialog'
+import { getDepartment } from '../../../../api/api'
 
 export default {
 	name: 'DivisionalView',
-	components: {},
+	components: {
+		DivisDialog
+	},
 	data() {
 		return {
 			name: '',
@@ -71,22 +58,26 @@ export default {
 		}
 	},
 	methods: {
-		submitForm(formName) {
-			this.$refs[formName].validate((valid) => {
-				if (valid) {
-					alert('submit!')
-				} else {
-					console.log('error submit!!')
-					return false
-				}
+		/* 修改 */
+		handleEdit(index, row) {
+			// console.log(index, row)
+			this.flag = 2
+			this.dialogVisible = true
+			this.$nextTick(() => {
+				this.$refs.Visible.init(row)
 			})
 		},
-		resetForm(formName) {
-			this.$refs[formName].resetFields()
+		/* 新增 */
+		NewPosts() {
+			this.flag = 1
+			this.dialogVisible = true
+			this.$nextTick(() => {
+				this.$refs.Visible.NewPosts()
+			})
 		},
-		// handleNodeClick(data) {
-		// 	console.log(data)
-		// },
+		close() {
+			this.dialogFormVisible = false
+		},
 		handleSizeChange(val) {
 			// console.log(`每页 ${val} 条`)
 			this.pagesize = val

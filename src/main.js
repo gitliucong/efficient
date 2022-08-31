@@ -6,7 +6,8 @@ import store from './store'
 // import httpRequest from '@/untils/httpRequest'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
+import './styles/element-variables.scss'
 
 // Vue.prototype.$http = httpRequest
 Vue.config.productionTip = false

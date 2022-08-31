@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { getMaterials } from '../../api/api'
+import { getMaterials } from '../../../api/api'
 
 export default {
 	name: 'MaterialMent',

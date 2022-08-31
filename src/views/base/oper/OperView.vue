@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getLogs } from '../../api/api'
+import { getLogs } from '../../../../api/api'
 
 export default {
 	name: 'OperView',
