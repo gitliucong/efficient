@@ -1,14 +1,15 @@
 <template>
 	<div>
 		<div class="role-top">
-			<div>角色名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
+			<div><span class="role-name">角色名称</span> <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
 			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增用户</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
-			<el-table :data="tableData" border style="width: 100%" stripe>
+			<el-table :header-cell-style="{ 'text-align': 'center' }"
+			:cell-style="{ 'text-align': 'center' }" :data="tableData" border style="width: 100%" stripe>
 				<el-table-column prop="id" label="id" width="55"> </el-table-column>
 				<el-table-column prop="name" label="角色名称"> </el-table-column>
 				<el-table-column prop="comment" label="备注"> </el-table-column>
@@ -108,5 +109,12 @@ export default {
 		width: 400px;
 		margin-right: 10px;
 	}
+	.role-name {
+		font-size: 14px;
+		color: #606266;
+	}
+}
+.el-pagination{
+	margin-top: 20px;
 }
 </style>

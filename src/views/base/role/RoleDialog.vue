@@ -4,21 +4,20 @@
 		<el-dialog
 			:title="flag == 1 ? '新增角色' : '修改角色'"
 			:visible.sync="dialogVisible"
-			width="30%"
+			width="50%"
 			label-position="right"
 			@closed="nulls"
 		>
-			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
+			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
 				<el-form-item label="角色名称" prop="name">
 					<el-input v-model="ruleForm.name"></el-input>
 				</el-form-item>
-				<!-- <el-cascader :options="options" :props="{ multiple: true, checkStrictly: true }" clearable></el-cascader> -->
 				<el-form-item label="备注" prop="comment">
 					<el-input type="textarea" v-model="ruleForm.comment"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
-					<el-button @click="resetForm('ruleForm')">取消</el-button>
+					<el-button @click="dialogVisible = false">取消</el-button>
 				</el-form-item>
 			</el-form>
 		</el-dialog>

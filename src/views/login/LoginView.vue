@@ -4,8 +4,8 @@
 			<p>OA系统登录</p>
 			<!-- 登录表单 -->
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-				<el-form-item prop="name">
-					<el-input v-model="ruleForm.name" placeholder="请输入用户名" prefix-icon="el-icon-user-solid"></el-input>
+				<el-form-item prop="account">
+					<el-input v-model="ruleForm.account" placeholder="请输入用户名" prefix-icon="el-icon-user-solid"></el-input>
 				</el-form-item>
 				<el-form-item prop="password">
 					<el-input
@@ -13,12 +13,13 @@
 						placeholder="请输入密码"
 						prefix-icon="el-icon-lock"
 						clear="password-ipt"
+						show-password
 					></el-input>
 				</el-form-item>
-				<p class="forget-password" @click="dialogFormVisible = true">忘记密码？</p>
+				<p class="forget-password" @click="forget">忘记密码？</p>
 				<div class="test-box">
-					<el-form-item prop="verification">
-						<el-input v-model="ruleForm.verification" placeholder="验证码" style="width: 260px"></el-input>
+					<el-form-item prop="code">
+						<el-input v-model="ruleForm.code" placeholder="验证码" style="width: 260px"></el-input>
 					</el-form-item>
 					<div class="test-picture">验证图片</div>
 				</div>
@@ -29,41 +30,67 @@
 		</el-card>
 		<div class="login-text"><p>©2022第四组版权所有京ICP证070791号京公网安备11010502025545号</p></div>
 		<!-- 忘记密码对话框 -->
-		<pass-dialog :dialogFormVisible="dialogFormVisible" @close="dialogFormVisible = false"></pass-dialog>
+		<PassDialog v-if="dialogFormVisible" ref="dialogForm" @closed="close"></PassDialog>
 	</div>
 </template>
 
 <script>
-import PassDialog from '../../components/PassDialog.vue'
+import PassDialog from './PassDialog'
 // import axios from 'axios'
 import { login } from '../../../api/api'
 export default {
-	components: { PassDialog },
+	components: {
+		PassDialog
+	},
 	name: 'LoginView',
 	data() {
+		// 用户名校验
+		var checkAccount = (rule, value, callback) => {
+			if (value === '') {
+				callback(new Error('请输入用户名'))
+			} else {
+				if (this.ruleForm.account !== '') {
+					let reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/
+					if (!reg.test(this.ruleForm.account)) {
+						callback(new Error('用户名以字母开头5-16字节,允许字母数字下划线)'))
+					}
+				}
+				callback()
+			}
+		} // 密码校验
+		var validatePass = (rule, value, callback) => {
+			if (value === '') {
+				callback(new Error('请输入密码'))
+			} else {
+				if (this.ruleForm.password !== '') {
+					let regPass = /^[a-zA-Z]\w{5,17}$/
+					if (!regPass.test(this.ruleForm.password)) {
+						callback(new Error('密码以字母开头,长度6~18位只能包含字母、数字和下划线'))
+					}
+				}
+				callback()
+			}
+		}
+
+		var validateCode = (rule, value, callback) => {
+			if (value === '') {
+				callback(new Error('请输入验证码'))
+			}
+			callback()
+		}
 		return {
-			/**登录表单数据 */
-			ruleForm: {},
-			/**表单验证 */
+			// 登录表单数据
+			ruleForm: {
+				account: '', //用户名
+				password: '', //密码
+				code: '' //验证码
+			}, // 登录校验
 			rules: {
-				name: [
-					{ required: true, message: '用户名不能为空', trigger: 'blur' },
-					{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-				],
-				password: [
-					{ required: true, message: '密码不能为空', trigger: 'blur' },
-					{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-				],
-				passwords: [
-					{ required: true, message: '密码不能为空', trigger: 'blur' },
-					{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-				],
-				verification: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
-			},
-			/* 忘记密码表单数据 */
-			form: {},
-			dialogFormVisible: false,
-			formLabelWidth: '100px'
+				password: [{ validator: validatePass, trigger: 'blur' }],
+				code: [{ validator: validateCode, trigger: 'blur' }],
+				account: [{ validator: checkAccount, trigger: 'blur' }]
+			}, // 忘记密码
+			dialogFormVisible: false
 		}
 	},
 	methods: {
@@ -77,6 +104,16 @@ export default {
 					return false
 				}
 			})
+		},
+		/* 忘记密码弹窗 */
+		forget() {
+			this.dialogFormVisible = true
+			this.$nextTick(() => {
+				this.$refs.dialogForm.forget()
+			})
+		},
+		close() {
+			this.dialogFormVisible = false
 		}
 	},
 	created() {

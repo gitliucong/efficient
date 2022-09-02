@@ -1,5 +1,10 @@
 import http from './http.js' //导入axios
 
+// 首页
+// const homes = (msg) => {
+// 	let data = http.get('/users/numbers', msg)
+// 	return data
+// }
 // 登录
 const login = (msg) => {
 	let data = http.post('/user/login', msg)
@@ -40,6 +45,12 @@ const getDepartment = (msg) => {
 	let data = http.get('/api/v1/department', msg)
 	return data
 }
+// 部门管理修改
+const putDepartment = (msg) => {
+	let data = http.put('/api/v1/department/' + msg.id, msg)
+	return data
+}
+
 // 登录日志
 const getLoginslogs = (msg) => {
 	let data = http.get('/api/v1/logins-logs', msg)
@@ -65,9 +76,33 @@ const getMaterials = (msg) => {
 	let data = http.get('/api/v1/materials', msg)
 	return data
 }
-
-export{
-    login,
+// 工资条录入
+const getPayroll = (msg) => {
+	let data = http.get('/api/v1/payroll', msg)
+	return data
+}
+// 我发起的
+const getMapplys = (msg) => {
+	let data = http.get('/api/v1/my-applys', msg)
+	return data
+}
+// 待办事项
+const getDealt = (msg) => {
+	let data = http.get('/api/v1/dealt-applys', msg)
+	return data
+}
+// 已办事项
+const getReplied = (msg) => {
+	let data = http.get('/api/v1/replied-applys', msg)
+	return data
+}
+//新增岗位
+const addjobs = (msg) => {
+	let data = http.post('/api/v1/addjobs', msg)
+	return data
+}
+export {
+	login,
 	getUsers,
 	getMenu,
 	getRoles,
@@ -75,9 +110,15 @@ export{
 	getRanks,
 	getJobs,
 	getDepartment,
+	putDepartment,
 	getLoginslogs,
 	getLogs,
 	getApprovalprocess,
 	getFlowpathtype,
-	getMaterials
+	getMaterials,
+	getPayroll,
+	getMapplys,
+	getDealt,
+	getReplied,
+	addjobs
 }

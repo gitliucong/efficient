@@ -1,0 +1,11 @@
+[
+	{
+		"id": 1,
+		"username": "冯佳秋",
+		"apply_type": "请假",
+		"approver": "小明",
+		"times": "2022-08-23 12:00",
+		"state": "已通过",
+		"department": "技术部"
+	}
+]

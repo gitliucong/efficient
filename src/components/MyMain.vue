@@ -67,9 +67,10 @@ export default {
 	left: 0;
 	bottom: 0;
 	overflow: scroll;
-	background-color: #e9eef3;
+	background-color: #fff;
 	color: #333;
 	text-align: center;
 	height: 100vh;
+	padding: 40px;
 }
 </style>

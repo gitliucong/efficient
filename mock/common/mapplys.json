@@ -1,0 +1,26 @@
+[
+	{
+		"id": 82,
+		"username": "小强",
+		"apply": 4,
+		"apply_type": "借款",
+		"apply_cate": "2000-5000",
+		"approver": "小强",
+		"department": "销售部",
+		"state_name": "已驳回",
+		"times": "2022-08-23T19:23:22+08:00",
+		"state": 3
+	},
+	{
+		"id": 85,
+		"username": "小强",
+		"apply": 1,
+		"apply_type": "请假",
+		"apply_cate": "事假",
+		"approver": "小红",
+		"department": "销售部",
+		"state_name": "未审批",
+		"times": "2022-08-23T19:23:22+08:00",
+		"state": 0
+	}
+]

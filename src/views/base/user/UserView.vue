@@ -2,11 +2,17 @@
 	<div>
 		<!-- 姓名   所属部门   手机号 -->
 		<div class="user-top">
-			<ul>
-				<li>姓名: <el-input v-model="name" placeholder="请输入姓名"></el-input></li>
-				<li>所属部门 <el-input v-model="phone" placeholder="请输入部门"></el-input></li>
-				<li>手机号 <el-input v-model="department" placeholder="请输入手机号"></el-input></li>
-			</ul>
+			<el-form :inline="true" :model="formInline" class="demo-form-inline" >
+				<el-form-item label="用户名">
+					<el-input v-model="formInline.username" placeholder="请输入用户名"></el-input>
+				</el-form-item>
+				<el-form-item label="所属部门">
+					<el-input v-model="formInline.dep_name" placeholder="请输入所属部门"></el-input>
+				</el-form-item>
+				<el-form-item label="手机号">
+					<el-input v-model="formInline.phone" placeholder="请输入手机号"></el-input>
+				</el-form-item>
+			</el-form>
 		</div>
 		<!-- 查询重置     新增用户 -->
 		<div class="user-center">
@@ -18,7 +24,14 @@
 		</div>
 		<!-- 表格 -->
 		<template>
-			<el-table :data="tableData" border style="width: 100%" stripe>
+			<el-table
+				:data="tableData"
+				border
+				style="width: 100%"
+				stripe
+				:header-cell-style="{ 'text-align': 'center' }"
+				:cell-style="{ 'text-align': 'center' }"
+			>
 				<el-table-column prop="id" label="id" width="55"> </el-table-column>
 				<el-table-column prop="username" label="用户名称"> </el-table-column>
 				<el-table-column prop="account" label="账号"> </el-table-column>
@@ -48,7 +61,7 @@
 		>
 		</el-pagination>
 		<!-- 新增对话框 -->
-		<UserDialog v-if="dialogFormVisible" ref="dialogForm" @close="close"> </UserDialog>
+		<UserDialog v-if="dialogFormVisible" ref="dialogForm" @close="close" @submitForm="submitForm"> </UserDialog>
 	</div>
 </template>
 
@@ -64,18 +77,18 @@ export default {
 	},
 	data() {
 		return {
-			/* 姓名 */
-			name: '',
-			/* 手机号 */
-			phone: '',
-			/* 部门 */
 			department: '',
 			tableData: [],
 			currentPage: 1,
 			pagesize: 1,
 			dialogFormVisible: false,
 			/* 1 新增  2修改  3详情 */
-			flag: 1
+			flag: 1,
+			formInline:{
+				username:'',
+				dep_name:'',
+				phone:'',
+			}
 		}
 	},
 	methods: {
@@ -138,19 +151,14 @@ export default {
 </script>
 <style scoped lang="scss">
 .user-top {
-	ul {
-		display: flex;
-		justify-content: space-between;
-		li {
-			width: 30%;
-			text-align: left;
-		}
-	}
+	display: flex;
+	align-items: center;
+	
 }
 .user-center {
 	display: flex;
 	justify-content: space-between;
-	margin: 25px 0;
+	margin-bottom: 20px;
 	.added {
 		margin-right: 150px;
 	}
@@ -160,5 +168,12 @@ export default {
 }
 .el-input {
 	width: 400px;
+	
+}
+.el-pagination {
+	margin-top: 20px;
+}
+.el-form-item{
+	margin:  20px;
 }
 </style>

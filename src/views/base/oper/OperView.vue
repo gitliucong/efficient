@@ -1,16 +1,19 @@
 <template>
 	<div>
 		<div class="loginoper-top">
-			<div>操作人 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
-			<el-time-picker
-				is-range
-				v-model="value1"
+			<div>
+				<span class="loginoper-name">操作人</span> <el-input v-model="name" placeholder="请输入姓名"></el-input>
+			</div>
+			<el-date-picker
+				v-model="value2"
+				type="datetimerange"
+				:picker-options="pickerOptions"
 				range-separator="至"
-				start-placeholder="开始时间"
-				end-placeholder="结束时间"
-				placeholder="选择时间范围"
+				start-placeholder="开始日期"
+				end-placeholder="结束日期"
+				align="right"
 			>
-			</el-time-picker>
+			</el-date-picker>
 		</div>
 		<div class="loginoper-btn">
 			<el-button icon="el-icon-search"> 查询</el-button>
@@ -19,7 +22,7 @@
 		<!-- 表格 -->
 		<template>
 			<el-table :data="tableData" border style="width: 100%" stripe>
-				<el-table-column prop="id" label="id"> </el-table-column>
+				<el-table-column prop="id" label="id" width="55"> </el-table-column>
 				<el-table-column prop="username" label="操作人"> </el-table-column>
 				<el-table-column prop="router" label="操作路径"> </el-table-column>
 				<el-table-column prop="operation" label="操作动作"> </el-table-column>
@@ -56,8 +59,40 @@ export default {
 			tableData: [],
 			currentPage: 1,
 			pagesize: 1,
-			value1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
-			time: ''
+
+			time: '',
+			value2: '',
+			pickerOptions: {
+				shortcuts: [
+					{
+						text: '最近一周',
+						onClick(picker) {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+							picker.$emit('pick', [start, end])
+						}
+					},
+					{
+						text: '最近一个月',
+						onClick(picker) {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+							picker.$emit('pick', [start, end])
+						}
+					},
+					{
+						text: '最近三个月',
+						onClick(picker) {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+							picker.$emit('pick', [start, end])
+						}
+					}
+				]
+			}
 		}
 	},
 	methods: {
@@ -98,6 +133,10 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin: 10px 0;
+	margin: 20px 0;
+}
+.loginoper-name {
+	font-size: 14px;
+	color: #606266;
 }
 </style>

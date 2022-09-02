@@ -4,11 +4,12 @@
 		<el-dialog
 			:title="flag == 1 ? '新增职级' : '编辑'"
 			:visible.sync="dialogVisible"
-			width="30%"
+			width="50%"
 			label-position="right"
 			@closed="nulls"
+			algin="left"
 		>
-			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
+			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
 				<el-form-item label="职级名称" prop="r_name">
 					<el-input v-model="ruleForm.r_name"></el-input>
 				</el-form-item>

@@ -1,15 +1,18 @@
 <template>
 	<div>
 		<div class="divisional-top">
-			<div>部门名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
+			<div><span class="divisional-name">部门名称</span> <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
 			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增部门</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
-			<el-table :data="tableData" border style="width: 100%" stripe>
-				<el-table-column prop="id" label="id"> </el-table-column>
+			<el-table :data="tableData" border style="width: 100%" stripe
+			:header-cell-style="{ 'text-align': 'center' }"
+			:cell-style="{ 'text-align': 'center' }"
+			>
+				<el-table-column prop="id" label="id" width="55"> </el-table-column>
 				<el-table-column prop="d_name" label="部门名称"> </el-table-column>
 				<el-table-column prop="d_comment" label="备注"> </el-table-column>
 				<el-table-column label="操作">
@@ -106,5 +109,12 @@ export default {
 		width: 400px;
 		margin-right: 10px;
 	}
+}
+.divisional-name{
+	font-size: 14px;
+	color: #606266;
+}
+.el-pagination{
+	margin-top: 20px;
 }
 </style>

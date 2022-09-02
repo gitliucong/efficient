@@ -1,15 +1,18 @@
 <template>
 	<div>
 		<div class="ranks-top">
-			<div>职级名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
+			<div><span class="ranks-name">职级名称</span> <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
 			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增职级</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
-			<el-table :data="tableData" border style="width: 100%" stripe>
-				<el-table-column prop="id" label="id"> </el-table-column>
+			<el-table :data="tableData" border style="width: 100%" stripe
+			:header-cell-style="{ 'text-align': 'center' }"
+			:cell-style="{ 'text-align': 'center' }"
+			>
+				<el-table-column prop="id" label="id" width="55"> </el-table-column>
 				<el-table-column prop="r_name" label="职级名称"> </el-table-column>
 				<el-table-column prop="r_comment" label="备注"> </el-table-column>
 				<el-table-column label="操作">
@@ -108,5 +111,12 @@ export default {
 		width: 400px;
 		margin-right: 10px;
 	}
+}
+.el-pagination{
+	margin-top: 20px;
+}
+.ranks-name{
+	font-size: 14px;
+	color: #606266;
 }
 </style>

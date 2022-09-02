@@ -1,0 +1,32 @@
+[
+	{
+		"id": 1,
+		"username": "冯佳秋",
+		"days": 15,
+		"miner_days": 2,
+		"leave_days": 2,
+		"basic_salary": "8000.00",
+		"post_salary": "2000.00",
+		"user": 1
+	},
+	{
+		"id": 2,
+		"username": "冯佳秋",
+		"days": 15,
+		"miner_days": 2,
+		"leave_days": 2,
+		"basic_salary": "8000.00",
+		"post_salary": "2000.00",
+		"user": 1
+	},
+	{
+		"id": 3,
+		"username": "冯佳秋",
+		"days": 15,
+		"miner_days": 2,
+		"leave_days": 2,
+		"basic_salary": "8000.00",
+		"post_salary": "2000.00",
+		"user": 1
+	}
+]

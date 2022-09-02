@@ -32,19 +32,18 @@
 			stripe
 		>
 			<el-table-column label="id" type="index"> </el-table-column>
-			<el-table-column prop="name" label="申请人"> </el-table-column>
-			<el-table-column prop="name" label="审批类型"> </el-table-column>
-			<el-table-column prop="date" label="申请时间"> </el-table-column>
-			<el-table-column prop="name" label="当前审批人"> </el-table-column>
-			<el-table-column prop="name" label="审批状态"> </el-table-column>
-			<el-table-column prop="name" label="所属部门"> </el-table-column>
-			<el-table-column label="操作">
+			<el-table-column prop="username" label="申请人"> </el-table-column>
+			<el-table-column prop="apply_type" label="审批类型"> </el-table-column>
+			<el-table-column prop="times" label="申请时间"> </el-table-column>
+			<el-table-column prop="approver" label="当前审批人"> </el-table-column>
+			<el-table-column prop="state" label="审批状态"> </el-table-column>
+			<el-table-column prop="department" label="所属部门"> </el-table-column>
+			<el-table-column label="操作" width="400">
 				<template slot-scope="scope">
-					<el-button size="mini" class="edit-btn" icon="el-icon-chat-dot-round" @click="dialogFormVisible = true"
+					<el-button size="mini" type="primary" @click="rejected"> 通过</el-button>
+					<el-button size="mini" type="danger" @click="rejected"> 驳回</el-button>
+					<el-button size="mini" class="edit-btn" icon="el-icon-chat-dot-round" @click="details(scope.row)"
 						>详情</el-button
-					>
-					<el-button size="mini" class="del-btn" icon="el-icon-refresh-right" @click="recall(scope.row)"
-						>撤回</el-button
 					>
 				</template>
 			</el-table-column>
@@ -53,109 +52,27 @@
 		<div class="page-box">
 			<el-pagination background layout="prev, pager, next" :total="100"> </el-pagination>
 		</div>
-
-		<!-- 审批详情弹出框 -->
-		<el-dialog title="审批详情" :visible.sync="dialogFormVisible">
-			<el-steps :space="200" :active="1" finish-status="success">
-				<el-step title="已完成"></el-step>
-				<el-step title="进行中"></el-step>
-				<el-step title="步骤 3"></el-step>
-			</el-steps>
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-form-item label="申请人" prop="name">
-					<el-input v-model="ruleForm.name"></el-input>
-				</el-form-item>
-				<el-form-item label="审批类型" prop="region">
-					<el-select v-model="ruleForm.region" placeholder="请假申请">
-						<el-option label="区域一" value="shanghai"></el-option>
-						<el-option label="区域二" value="beijing"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="申请时间" required>
-					<el-col :span="11">
-						<el-form-item prop="date1">
-							<el-date-picker
-								type="date"
-								placeholder="选择日期"
-								v-model="ruleForm.date1"
-								style="width: 100%"
-							></el-date-picker>
-						</el-form-item>
-					</el-col>
-					<el-col :span="1">-</el-col>
-					<el-col :span="11">
-						<el-form-item prop="date2">
-							<el-time-picker placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%"></el-time-picker>
-						</el-form-item>
-					</el-col>
-				</el-form-item>
-				<el-form-item label="所属部门" prop="region">
-					<el-select v-model="ruleForm.region" placeholder="人事部">
-						<el-option label="区域一" value="shanghai"></el-option>
-						<el-option label="区域二" value="beijing"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="审批状态" prop="region">
-					<el-select v-model="ruleForm.region" placeholder="已审批">
-						<el-option label="区域一" value="shanghai"></el-option>
-						<el-option label="区域二" value="beijing"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="当前审批人" prop="name">
-					<el-input v-model="ruleForm.name"></el-input>
-				</el-form-item>
-				<el-form-item class="form-right">
-					<el-button type="primary" @click="submitForm('ruleForm')">撤回</el-button>
-					<el-button @click="resetForm('ruleForm')">取消</el-button>
-				</el-form-item>
-			</el-form>
-		</el-dialog>
-
-		<!-- 新增申请弹出框 -->
-		<el-dialog title="收货地址" :visible.sync="addDialog">
-			<el-form ref="form" :model="addForm" label-width="80px" class="demo-ruleForm">
-				<el-form-item label="活动区域">
-					<el-select v-model="addForm.region" placeholder="请选择活动区域">
-						<el-option label="区域一" value="shanghai"></el-option>
-						<el-option label="区域二" value="beijing"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="活动时间">
-					<el-col :span="11">
-						<el-date-picker
-							type="date"
-							placeholder="选择日期"
-							v-model="addForm.date1"
-							style="width: 100%"
-						></el-date-picker>
-					</el-col>
-					<el-col :span="1">-</el-col>
-					<el-col :span="11">
-						<el-time-picker placeholder="选择时间" v-model="addForm.date2" style="width: 100%"></el-time-picker>
-					</el-col>
-				</el-form-item>
-
-				<el-steps :space="200" :active="1" finish-status="success">
-					<el-step title="已完成"></el-step>
-					<el-step title="进行中"></el-step>
-					<el-step title="步骤 3"></el-step>
-				</el-steps>
-
-				<el-form-item class="form-right">
-					<el-button type="primary" @click="recall">撤回</el-button>
-					<el-button>取消</el-button>
-				</el-form-item>
-			</el-form>
-		</el-dialog>
+		<!-- 通过 驳回 -->
+		<rejected-dialog v-if="dialogFormVisible" ref="Visible"></rejected-dialog>
+		<!-- 详情弹出框 -->
+		<Xdialog v-if="dialogVisible" ref="deta"></Xdialog>
 	</div>
 </template>
 
 <script>
+import Xdialog from './Xdialog'
+import RejectedDialog from './RejectedDialog.vue'
+import { getDealt } from '../../../../api/api'
+
 export default {
 	name: 'BacklogView',
-	components: {},
+	components: {
+		Xdialog,
+		RejectedDialog
+	},
 	data() {
 		return {
+			tableData: [],
 			options: [
 				{
 					value: '选项1',
@@ -166,36 +83,16 @@ export default {
 			searchVal: '',
 			searchStatus: '',
 			// 表格数据
-			tableData: [
-				{
-					date: '2022年5月20日 14:09:23',
-					name: '王小虎'
-				},
-				{
-					date: '2022年5月20日 14:09:23',
-					name: '王小虎'
-				}
-			],
 			dialogFormVisible: false,
-			ruleForm: {
-				name: '',
-				region: ''
-			},
-			rules: {},
+			dialogVisible: false,
 			formLabelWidth: '130px',
 			// 选择日期
 			value1: '',
 			// 选择时间
-			value2: '',
+			value2: ''
 			// 新增申请弹框状态
-			addDialog: false,
-			addForm: {
-				name: ''
-			}
 		}
 	},
-	created() {},
-	mounted() {},
 	methods: {
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
@@ -211,8 +108,19 @@ export default {
 			this.dialogFormVisible = false
 			this.$refs[formName].resetFields()
 		},
-		// 新增申请
-
+		/* 通过 驳回 */
+		rejected() {
+			this.dialogFormVisible = true
+			this.$nextTick(() => {
+				this.$refs.Visible.rejected()
+			})
+		},
+		details(row) {
+			this.dialogVisible = true
+			this.$nextTick(() => {
+				this.$refs.deta.details(row)
+			})
+		},
 		// 撤回
 		recall() {
 			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -233,7 +141,14 @@ export default {
 					})
 				})
 		}
-	}
+	},
+	created() {
+		getDealt().then((res) => {
+			console.log(res.data.dealtData)
+			this.tableData = res.data.dealtData
+		})
+	},
+	mounted() {}
 }
 </script>
 <style scoped lang="scss">

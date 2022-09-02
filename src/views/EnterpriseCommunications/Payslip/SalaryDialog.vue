@@ -1,14 +1,15 @@
 <template>
 	<div class="salaryadd">
-		<el-dialog title="新增工资条" :visible.sync="dialogVisible" width="50%">
+		<el-dialog title="新增工资条" :visible.sync="dialogFormVisible" width="50%">
 			<div class="main">
 				<div>
 					<span>姓名：</span>
 					<div class="box">
-						<el-input v-model="inp" placeholder=""></el-input>
+						<el-input v-model="username" placeholder=""></el-input>
 						<el-tree :data="data" :props="defaultProps"></el-tree>
 					</div>
 				</div>
+
 				<el-input
 					type="textarea"
 					:rows="10"
@@ -20,8 +21,8 @@
 				</el-input>
 			</div>
 			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="dialogVisible = false">新增</el-button>
-				<el-button @click="dialogVisible = false">取 消</el-button>
+				<el-button type="primary" @click="dialogFormVisible = false">新增</el-button>
+				<el-button @click="dialogFormVisible = false">取 消</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -32,7 +33,9 @@ export default {
 	components: {},
 	data() {
 		return {
-			dialogVisible: true,
+			dialogFormVisible: false,
+			/* 1 新增  2修改  3详情 */
+			flag: 1,
 			data: [
 				{
 					label: '一级 1',
@@ -94,8 +97,20 @@ export default {
 				children: 'children',
 				label: 'label'
 			},
-			inp: '',
+			username: '',
 			textarea: ''
+		}
+	},
+	methods: {
+		init(row) {
+			this.flag = 2
+			this.dialogFormVisible = true
+			console.log(row)
+			this.ruleForm = row
+		},
+		NewPosts() {
+			this.flag = 1
+			this.dialogFormVisible = true
 		}
 	}
 }

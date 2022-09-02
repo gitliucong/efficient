@@ -133,7 +133,7 @@ export default {
 			},
 			legend: {
 				orient: 'vertical',
-				right: 30,
+				right: 120,
 				top: 40
 			},
 			series: [
@@ -173,7 +173,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	ul {
-		width: 70%;
+		width: 50%;
 		border: 1px solid #bbb;
 		border-bottom: none;
 		li {
@@ -189,7 +189,7 @@ export default {
 		}
 	}
 	.block {
-		width: 28%;
+		width: 50%;
 		height: 255px;
 		text-align: left;
 	}
@@ -201,7 +201,7 @@ export default {
 	justify-content: space-between;
 	/* 员工数据 */
 	.content-left {
-		width: 49%;
+		width: 50%;
 		height: 250px;
 		border: 1px solid #bbb;
 		.content-left-top {
@@ -216,11 +216,11 @@ export default {
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
-				padding: 30px;
+				padding: 20px;
 				div {
 					flex: 1;
 					border-right: 1px solid #bbb;
-					// margin-right: 20px;
+					line-height: 30px;
 				}
 				.serry {
 					border: none;
@@ -251,31 +251,67 @@ export default {
 	width: 100%;
 	border: 1px solid #bbb;
 	.home-bottom-top {
-		text-align: left;
 		margin-left: 130px;
-		margin-top: 30px;
+		margin-top: 20px;
 		font-size: 20px;
+		float: left;
 	}
 	#birthday {
-		width: 1200px;
-		height: 260px;
+		width: 100%;
+		height: 300px;
 		margin: 0 auto;
 	}
 }
 ::v-deep .el-calendar {
 	width: 100%;
 	height: 255px;
-	.el-calendar__body {
-		// padding: 15px 15px 15px;
-		.el-calendar-day {
-			height: 12px;
+	.el-calendar__header {
+		display: flex;
+		justify-content: center;
+		padding: 12px 20px;
+		border-bottom: 1px solid #ebeef5;
+		.el-calendar__button-group {
+			display: none;
 		}
+		.el-calendar__title {
+			text-align: center;
+		}
+	}
+	.el-calendar__body {
+		padding: 20px;
+		.el-calendar-table {
+			table-layout: fixed;
+			width: 100%;
+			thead {
+				display: table-header-group;
+				vertical-align: middle;
+				border-color: inherit;
+				text-align: center;
+			}
+			tbody {
+				display: table-row-group;
+				vertical-align: middle;
+				border-color: inherit;
+				.el-calendar-day {
+					box-sizing: border-box;
+					padding: 5px;
+					height: 26px;
+					text-align: center;
+				}
+			}
+		}
+
 		.el-calendar-table .el-calendar-day {
 			box-sizing: border-box;
-			padding: 5px;
+			padding: 2px;
 			height: 22px;
 			text-align: center;
 		}
+	}
+	.el-calendar-table thead th {
+		padding: 0 13px;
+		color: #606266;
+		font-weight: normal;
 	}
 }
 </style>

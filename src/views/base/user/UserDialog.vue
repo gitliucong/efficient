@@ -4,9 +4,10 @@
 		<el-dialog
 			:title="flag == 1 ? '新增用户' : flag == 2 ? '修改用户' : '用户详情'"
 			:visible.sync="dialogFormVisible"
-			width="30%"
-			label-position="right"
+			width="50%"
+			label-position="left"
 			@closed="nulls"
+			align="left"
 		>
 			<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
 				<el-form-item label="用户名称" prop="username">
@@ -19,27 +20,30 @@
 					<el-input v-model="ruleForm.phone"></el-input>
 				</el-form-item>
 				<el-form-item label="角色名称" prop="role_name">
-					<el-select v-model="ruleForm.role_name" placeholder="管理员角色">
-						<el-option label="普通用户" value="shanghai"></el-option>
-						<el-option label="部门管理员" value="beijing"></el-option>
+					<el-select v-model="ruleForm.role_name" placeholder="管理员角色" size="medium">
+						<el-option label="管理员角色" value="管理员角色"></el-option>
+						<el-option label="普通用户" value="普通用户"></el-option>
+						<el-option label="部门管理员" value="部门管理员"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="所属岗位" prop="job_name">
 					<el-select v-model="ruleForm.job_name" placeholder="销售岗">
-						<el-option label="销售岗" value="shanghai"></el-option>
-						<el-option label="技术" value="beijing"></el-option>
+						<el-option label="销售岗" value="销售岗"></el-option>
+						<el-option label="技术岗" value="技术岗"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="所属职级" prop="rank_name">
 					<el-select v-model="ruleForm.rank_name" placeholder="1">
-						<el-option label="2" value="shanghai"></el-option>
-						<el-option label="3" value="beijing"></el-option>
+						<el-option label="1" value="总经理"></el-option>
+						<el-option label="2" value="部门经理"></el-option>
+						<el-option label="3" value="副主任"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="所属部门" prop="dep_name">
 					<el-select v-model="ruleForm.dep_name" placeholder="1">
-						<el-option label="2" value="shanghai"></el-option>
-						<el-option label="3" value="beijing"></el-option>
+						<el-option label="1" value="总经办"></el-option>
+						<el-option label="2" value="人事部"></el-option>
+						<el-option label="3" value="采购部"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
@@ -86,8 +90,8 @@ export default {
 				],
 				account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
 				phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-				role_name: [{ type: 'date', required: true, message: '请选择角色名称', trigger: 'change' }],
-				job_name: [{ type: 'date', required: true, message: '请选择所属岗位', trigger: 'change' }],
+				role_name: [{ type: 'string', required: true, message: '请选择角色名称', trigger: 'change' }],
+				job_name: [{ type: 'string', required: true, message: '请选择所属岗位', trigger: 'change' }],
 				rank_name: [{ required: true, message: '请选择所属职级', trigger: 'change' }],
 				dep_name: [{ required: true, message: '请选择所属部门', trigger: 'change' }]
 			}
@@ -127,12 +131,14 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
-					alert('submit!')
+					// alert('submit!')
+					this.$emit('submitForm', this.ruleForm)
 				} else {
 					console.log('error submit!!')
 					return false
 				}
 			})
+			// console.log(formName)
 		},
 		resetForm(formName) {
 			this.$refs[formName].resetFields()
@@ -147,4 +153,11 @@ export default {
 	mounted() {}
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-select{
+	width: 95%;
+}
+.el-input{
+	width: 95%;
+}
+</style>

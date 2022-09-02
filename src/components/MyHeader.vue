@@ -1,45 +1,93 @@
+/* eslint-disable no-undef */
 <template>
-	<div class="header-box">
-		<div></div>
-		<div class="header-right">
-			<el-badge :value="12" class="item">
-				<i class="el-icon-s-flag"></i>
-			</el-badge>
-			<el-badge :value="10" class="item" type="warning">
-				<i class="el-icon-message-solid"></i>
-			</el-badge>
-			<el-badge :value="12" class="item" type="primary">
-				<i class="el-icon-document"></i>
-			</el-badge>
-			<i class="el-icon-rank"></i>
-			<div class="demo-type">
-				<div>
-					<el-avatar icon="el-icon-user-solid"></el-avatar>
+	<div>
+		<div class="header-box">
+			<div></div>
+			<div class="header-right">
+				<el-badge :value="12" class="item">
+					<i class="el-icon-s-flag"></i>
+				</el-badge>
+				<el-badge :value="10" class="item" type="warning">
+					<i class="el-icon-message-solid"></i>
+				</el-badge>
+				<el-badge :value="12" class="item" type="primary">
+					<i class="el-icon-document"></i>
+				</el-badge>
+				<i class="el-icon-rank" @click="fullScreen"></i>
+				<div class="demo-type">
+					<div>
+						<el-avatar icon="el-icon-user-solid"></el-avatar>
+					</div>
 				</div>
+				<el-col :span="12">
+					<el-dropdown>
+						<span class="el-dropdown-link"> 超级管理员 </span>
+						<el-dropdown-menu slot="dropdown">
+							<ul class="dropdown">
+								<li @click="xiugai">修改密码</li>
+								<li>退出登录</li>
+								<li>个人中心</li>
+								<li>选择目录</li>
+							</ul>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</el-col>
 			</div>
-			<el-col :span="12">
-				<el-dropdown>
-					<span class="el-dropdown-link"> 超级管理员 </span>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item>修改密码</el-dropdown-item>
-						<el-dropdown-item>退出登录</el-dropdown-item>
-						<el-dropdown-item>个人中心</el-dropdown-item>
-						<el-dropdown-item>选择目录</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
-			</el-col>
 		</div>
+		<PassDialog v-if="dialogFormVisible" ref="dialogForm"></PassDialog>
 	</div>
 </template>
 
 <script>
+import PassDialog from '../views/login/PassDialog'
 export default {
 	name: 'MyHeader',
-	components: {},
-	data() {
-		return {}
+	components: {
+		PassDialog
 	},
-	methods: {},
+	data() {
+		return {
+			isfullScreen: true,
+			dialogFormVisible: false
+		}
+	},
+	methods: {
+		xiugai() {
+			this.dialogFormVisible = true
+			this.$nextTick(() => {
+				this.$refs.dialogForm.xiugai()
+			})
+		},
+		/* 全屏放大 */
+		fullScreen() {
+			if (this.isfullScreen) {
+				var docElm = document.documentElement
+				if (docElm.requestFullscreen) {
+					docElm.requestFullscreen()
+				} else if (docElm.mozRequestFullScreen) {
+					docElm.mozRequestFullScreen()
+				} else if (docElm.webkitRequestFullScreen) {
+					docElm.webkitRequestFullScreen()
+					// eslint-disable-next-line no-undef
+				} else if (elem.msRequestFullscreen) {
+					// eslint-disable-next-line no-undef
+					elem.msRequestFullscreen()
+				}
+				this.isfullScreen = false
+			} else {
+				if (document.exitFullscreen) {
+					document.exitFullscreen()
+				} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen()
+				} else if (document.webkitCancelFullScreen) {
+					document.webkitCancelFullScreen()
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen()
+				}
+				this.isfullScreen = true
+			}
+		}
+	},
 	computed: {},
 	created() {},
 	mounted() {}
@@ -52,6 +100,7 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
+	border-bottom: 1px solid #ccc;
 	.header-right {
 		display: flex;
 		align-items: center;
@@ -67,6 +116,11 @@ export default {
 	.fold {
 		font-size: 36px;
 		color: #9a9a9a;
+	}
+}
+.dropdown {
+	li {
+		padding: 10px;
 	}
 }
 ::v-deep .el-badge__content.is-fixed {

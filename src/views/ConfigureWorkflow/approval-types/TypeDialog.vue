@@ -1,34 +1,24 @@
 <template>
 	<div>
-		<!-- 审批流程类型 -->
-		<el-dialog
-			:title="flag == 1 ? '审批流程' : '编辑'"
-			:visible.sync="dialogVisible"
-			width="30%"
-			align="left"
-			@closed="nulls"
-		>
+		<!-- 添加流程对话框 -->
+		<el-dialog :title="flag == 1 ? '添加流程类型' : '编辑'" :visible.sync="dialogVisible" width="30%" @closed="nulls">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-form-item label="类型模型" prop="process_type">
-					<el-select v-model="ruleForm.process_type" placeholder="请假流程">
-						<el-option label="请假流程" value="qingjia"></el-option>
-						<el-option label="出差流程" value="chuchai"></el-option>
-						<el-option label="借车流程" value="jieche"></el-option>
+				<el-form-item label="类型名称" prop="type_name">
+					<el-input v-model="ruleForm.type_name" placeholder="借款"></el-input>
+				</el-form-item>
+				<el-form-item label="类型模型" prop="type_board">
+					<el-select v-model="ruleForm.type_board" placeholder="请假模板">
+						<el-option label="请假模板" value="qingjia"></el-option>
+						<el-option label="用户模板" value="yonghu"></el-option>
+						<el-option label="借款模板" value="jiekuan"></el-option>
+						<el-option label="出差模板" value="chuchai"></el-option>
+						<el-option label="报销模板" value="baoxiao"></el-option>
+						<el-option label="转正模板" value="zhuanzheng"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="状态" prop="state">
-					<el-radio-group v-model="ruleForm.state">
-						<el-radio label="启用"></el-radio>
-						<el-radio label="禁用"></el-radio>
-					</el-radio-group>
-				</el-form-item>
-				<el-form-item label="流程说明" prop="process_title">
-					<el-input type="textarea" v-model="ruleForm.process_title"></el-input>
-				</el-form-item>
-
 				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
 					<el-button @click="resetForm('ruleForm')">取消</el-button>
+					<el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
 				</el-form-item>
 			</el-form>
 		</el-dialog>
@@ -37,7 +27,7 @@
 
 <script>
 export default {
-	name: 'AppDialog',
+	name: 'TypeDialog',
 	components: {},
 	data() {
 		return {
@@ -48,6 +38,7 @@ export default {
 		}
 	},
 	methods: {
+		// 确定
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
@@ -58,6 +49,7 @@ export default {
 				}
 			})
 		},
+		//   取消
 		resetForm(formName) {
 			this.$refs[formName].resetFields()
 			this.$emit('close')

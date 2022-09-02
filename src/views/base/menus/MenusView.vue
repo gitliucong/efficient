@@ -1,14 +1,22 @@
 <template>
 	<div>
 		<div class="menus-top">
-			<div>菜单名称 <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
+			<div><span class="menus-name">菜单名称</span> <el-input v-model="name" placeholder="请输入姓名"></el-input></div>
 			<el-button icon="el-icon-search"> 查询</el-button>
 			<el-button icon="el-icon-refresh-right"> 重置</el-button>
 			<el-button class="added" type="primary" icon="el-icon-circle-plus-outline" @click="NewPosts">新增菜单</el-button>
 		</div>
 		<!-- 表格 -->
 		<template>
-			<el-table :data="tableData" border style="width: 100%" stripe>
+			<el-table
+				:data="tableData"
+				border
+				style="width: 100%; margin-bottom: 20px"
+				row-key="id"
+				default-expand-all
+				:tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+				stripe
+			>
 				<el-table-column prop="m_name" label="菜单名称"> </el-table-column>
 				<el-table-column prop="m_route" label="菜单路径"> </el-table-column>
 				<el-table-column prop="m_sort" label="排序"> </el-table-column>
@@ -154,7 +162,7 @@ export default {
 	created() {
 		getMenus().then((res) => {
 			console.log(res.data.menusData)
-			this.tableData = res.data.menusData
+			this.tableData = res.data.menusData.data
 		})
 	},
 	mounted() {}
@@ -165,9 +173,14 @@ export default {
 .menus-top {
 	display: flex;
 	margin-bottom: 20px;
+
 	.el-input {
 		width: 400px;
 		margin-right: 10px;
+	}
+	.menus-name{
+		font-size: 14px;
+		color: #606266;
 	}
 }
 </style>

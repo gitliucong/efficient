@@ -1,6 +1,8 @@
 let express = require('express') //引入repress
-let Mock = require('mockjs')     //引入mock
+let Mock = require('mockjs') //引入mock
 
+// 首页
+// const homes =require('./common/home.json')
 // 登录页面数据
 const login = require('./common/login.json')
 //登录操作日志数据
@@ -29,18 +31,25 @@ const approvalprocessData = require('./common/approvalprocess.json')
 const flowpathtypeData = require('./common/flowpathtype.json')
 // 材料管理
 const materialsData = require('./common/materials.json')
+// 工资条录入
+const payrollData = require('./common/payroll.json')
+// 我发起的
+const mapplysData = require('./common/mapplys.json')
+// 已办事项
+const repliedData = require('./common/replied.json')
+// 待办事项
+const dealtData = require('./common/dealt.json')
 
-
-let app = express()             //实例化express
+let app = express() //实例化express
 // 登录
-app.use('/user/login',function(req,res){
-    res.json(
-        Mock.mock({
-            status:200,
-            msg:'登录成功',
-            login
-        })
-    )
+app.use('/user/login', function (req, res) {
+	res.json(
+		Mock.mock({
+			status: 200,
+			msg: '登录成功',
+			login
+		})
+	)
 })
 // 用户管理
 app.use('/api/v1/users', function (req, res) {
@@ -162,9 +171,56 @@ app.use('/api/v1/materials', function (req, res) {
 		})
 	)
 })
+// 工资条录入
+app.use('/api/v1/payroll', function (req, res) {
+	res.json(
+		Mock.mock({
+			status: 200,
+			msg: '数据获取成功',
+			payrollData
+		})
+	)
+})
+// 我发起的
+app.use('/api/v1/my-applys', function (req, res) {
+	res.json(
+		Mock.mock({
+			status: 200,
+			msg: '数据获取成功',
+			repliedData
+		})
+	)
+})
+// // 待办事项
+// app.use('/api/v1/dealt-applys', function (req, res) {
+// 	res.json(
+// 		Mock.mock({
+// 			status: 200,
+// 			msg: '数据获取成功',
+// 			dealtData
+// 		})
+// 	)
+// })
+// 已办事项
+app.use('/api/v1/replied-applys', function (req, res) {
+	res.json(
+		Mock.mock({
+			status: 200,
+			msg: '数据获取成功',
+			repliedData
+		})
+	)
+})
+app.use('/api/v1/addjobs', function (req, res) {
+	res.json(
+		Mock.mock({
+			status: 200,
+			msg: '添加成功',
+			addjobs
+		})
+	)
+})
 
-
-
-app.listen('8000',() => {
-    console.log('监听端口 8000');
+app.listen('8000', () => {
+	console.log('监听端口 8000')
 })
